@@ -2,6 +2,7 @@
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -144,7 +145,43 @@ public class AddressBookMain {
 		}
 	}
 	
+	private static void searchByCity(Map<String, AddressBookMain> addressBookMap) {
+		sc.nextLine();
+		System.out.println("Enter City of person whose record is to be searched: ");
+		String city = sc.nextLine();
+		int flag = 0;
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++)
+				if (value.contactDetailsList.stream().anyMatch(n->n.getCity().equals(city))) {
+					System.out.println(value.contactDetailsList.get(i));
+					flag = 1;
+					break;
+				}
+		}
+		if (flag == 0) {
+			System.out.println("No such record found");
+		}
+	}
 	
+	private static void searchByState(Map<String, AddressBookMain> addressBookMap) {
+		sc.nextLine();
+		System.out.println("Enter state of person whose record is to be searched: ");
+		String state = sc.nextLine();
+		int flag = 0;
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++)
+				if (value.contactDetailsList.stream().anyMatch(n->n.getState().equals(state))) {
+					System.out.println(value.contactDetailsList.get(i));
+					flag = 1;
+					break;
+				}
+		}
+		if (flag == 0) {
+			System.out.println("No such record found");
+		}
+	}
 
 
 	public static void main(String[] args) {
