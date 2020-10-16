@@ -21,7 +21,8 @@ public class AddressBookMain {
 	}
 
 	/**
-
+	 * 
+	 * @param addressBookNum
 	 */
 
 	private void addContact(int addressBookNum) {
@@ -67,7 +68,8 @@ public class AddressBookMain {
 	}
 
 	/**
-
+	 * 
+	 * @param addressBookMap
 	 */
 	private static void editContact(Map<String, AddressBookMain> addressBookMap) {
 		sc.nextLine();
@@ -101,7 +103,8 @@ public class AddressBookMain {
 		}
 	}
     /**
-
+     * 
+     * @param addressBookMap
      */
 	private static void searchContactDetails(Map<String, AddressBookMain> addressBookMap) {
 		sc.nextLine();
@@ -125,8 +128,10 @@ public class AddressBookMain {
 		}
 	}
 	/**
-
+	 * 
+	 * @param addressBookMap
 	 */
+
 	public static void deleteContactDetails(Map<String, AddressBookMain> addressBookMap) {
 		sc.nextLine();
 		System.out.println("Enter First Name of person whose record is to be deleted: ");
@@ -151,7 +156,8 @@ public class AddressBookMain {
 	}
 
 	/**
-
+	 * 
+	 * @param addressBookMap
 	 */
 	private static void displayContactDetails(Map<String, AddressBookMain> addressBookMap) {
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
@@ -162,7 +168,9 @@ public class AddressBookMain {
 	}
 	
 	/**
-
+	 * 
+	 * @param addressBookMap
+	 * @param city
 	 */
 	private static void searchByCity(Map<String, AddressBookMain> addressBookMap, String city) {
 		int count = 0;
@@ -178,8 +186,11 @@ public class AddressBookMain {
 		System.out.println("Count in this city is "+count);
 	}
 	/**
-
+	 * 
+	 * @param addressBookMap
+	 * @param state
 	 */
+
 	private static void searchByState(Map<String, AddressBookMain> addressBookMap, String state) {
 		int count = 0;
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
@@ -195,7 +206,8 @@ public class AddressBookMain {
 	}
 
 	/**
-
+	 * 
+	 * @param addressBookMap
 	 */
 	private static void groupByCity(Map<String, AddressBookMain> addressBookMap) {
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
@@ -210,7 +222,8 @@ public class AddressBookMain {
 		}
 	}
 	/**
-
+	 * 
+	 * @param addressBookMap
 	 */
 	private static void groupByState(Map<String, AddressBookMain> addressBookMap) {
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
@@ -224,7 +237,10 @@ public class AddressBookMain {
 			}
 		}
 	}
-
+    /**
+     * 
+     * @param addressBookMap
+     */
 	public static void sortByFirstName(Map<String, AddressBookMain> addressBookMap) {
 		List<ContactDetails> unsortedList = null;
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
@@ -234,6 +250,51 @@ public class AddressBookMain {
 			}
 		}
 		List<ContactDetails> sortedList = unsortedList.stream().sorted(Comparator.comparing(ContactDetails::getFirstName)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+	/**
+	 * 
+	 * @param addressBookMap
+	 */
+	public static void sortByCity(Map<String, AddressBookMain> addressBookMap) {
+		List<ContactDetails> unsortedList = null;
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++) {
+		        unsortedList =  contactDetailsList;
+			}
+		}
+		List<ContactDetails> sortedList = unsortedList.stream().sorted(Comparator.comparing(ContactDetails::getCity)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+	/**
+	 * 
+	 * @param addressBookMap
+	 */
+	public static void sortByState(Map<String, AddressBookMain> addressBookMap) {
+		List<ContactDetails> unsortedList = null;
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++) {
+		        unsortedList =  contactDetailsList;
+			}
+		}
+		List<ContactDetails> sortedList = unsortedList.stream().sorted(Comparator.comparing(ContactDetails::getState)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
+	/**
+	 * 
+	 * @param addressBookMap
+	 */
+	public static void sortByZip(Map<String, AddressBookMain> addressBookMap) {
+		List<ContactDetails> unsortedList = null;
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++) {
+		        unsortedList =  contactDetailsList;
+			}
+		}
+		List<ContactDetails> sortedList = unsortedList.stream().sorted(Comparator.comparing(ContactDetails::getZip)).collect(Collectors.toList());
 		System.out.println(sortedList);
 	}
 	
@@ -262,7 +323,10 @@ public class AddressBookMain {
 			System.out.println("7. List by city ");
 			System.out.println("8. List by state ");
 			System.out.println("9. Sort By First Name");
-			System.out.println("10. Exit ");
+			System.out.println("10. Sort By City");
+			System.out.println("11. Sort By State");
+			System.out.println("12. Sort By ZIP");
+			System.out.println("13. Exit ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -295,6 +359,15 @@ public class AddressBookMain {
 				break;
 			case 9:
 				sortByFirstName(addressBookMap);
+				break;
+			case 10:
+				sortByCity(addressBookMap);
+				break;
+			case 11:
+				sortByState(addressBookMap);
+				break;
+			case 12:
+				sortByZip(addressBookMap);
 				break;
 			default:
 				i = 0;
