@@ -4,14 +4,13 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
-
 
 
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
 	private LinkedList<ContactDetails> contactDetailsList;
-	
 
 	private AddressBookMain() {
 		contactDetailsList = new LinkedList<>();
@@ -113,7 +112,7 @@ public class AddressBookMain {
 			System.out.println("No such record found");
 		}
 	}
-
+	
 	public static void deleteContactDetails(Map<String, AddressBookMain> addressBookMap) {
 		sc.nextLine();
 		System.out.println("Enter First Name of person whose record is to be deleted: ");
@@ -145,10 +144,7 @@ public class AddressBookMain {
 		}
 	}
 	
-	private static void searchByCity(Map<String, AddressBookMain> addressBookMap) {
-		sc.nextLine();
-		System.out.println("Enter City of person whose record is to be searched: ");
-		String city = sc.nextLine();
+	private static void searchByCity(Map<String, AddressBookMain> addressBookMap,city) {
 		int flag = 0;
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
 			AddressBookMain value = entry.getValue();
@@ -156,7 +152,6 @@ public class AddressBookMain {
 				if (value.contactDetailsList.stream().anyMatch(n->n.getCity().equals(city))) {
 					System.out.println(value.contactDetailsList.get(i));
 					flag = 1;
-					break;
 				}
 		}
 		if (flag == 0) {
@@ -164,10 +159,7 @@ public class AddressBookMain {
 		}
 	}
 	
-	private static void searchByState(Map<String, AddressBookMain> addressBookMap) {
-		sc.nextLine();
-		System.out.println("Enter state of person whose record is to be searched: ");
-		String state = sc.nextLine();
+	private static void searchByState(Map<String, AddressBookMain> addressBookMap, map) {
 		int flag = 0;
 		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
 			AddressBookMain value = entry.getValue();
@@ -175,7 +167,6 @@ public class AddressBookMain {
 				if (value.contactDetailsList.stream().anyMatch(n->n.getState().equals(state))) {
 					System.out.println(value.contactDetailsList.get(i));
 					flag = 1;
-					break;
 				}
 		}
 		if (flag == 0) {
@@ -183,7 +174,33 @@ public class AddressBookMain {
 		}
 	}
 
+	private static void groupByCity(Map<String, AddressBookMain> addressBookMap) {
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++) {
+		Set<String> cityList=value.contactDetailsList.stream().map(contact->contact.getCity()).collect(Collectors.toSet());
+		for(String cityName : cityList) {
+			System.out.println("Contact Entries for CITY: " + cityName);
+			searchByCity(addressBookMap,cityName);
+		}
+			}
+		}
+	}
+	
+	private static void groupByState(Map<String, AddressBookMain> addressBookMap) {
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++) {
+		Set<String> mapList=value.contactDetailsList.stream().map(contact->contact.getState()).collect(Collectors.toSet());
+		for(String mapName : mapList) {
+			System.out.println("Contact Entries for STATE: " + mapName);
+			searchByCity(addressBookMap,mapName);
+		}
+			}
+		}
+	}
 
+	
 	public static void main(String[] args) {
 		Map<String, AddressBookMain> addressBookMap = new HashMap<>();
 		System.out.println("How many address books should be created? ");
@@ -204,9 +221,11 @@ public class AddressBookMain {
 			System.out.println("2. Delete Contact ");
 			System.out.println("3. Search Contact ");
 			System.out.println("4. Display Contact ");
-		//	System.out.println("5. Search Contact by city ");
-		//	System.out.println("6. Search Contact by state ");
-			System.out.println("5. Exit ");
+			System.out.println("5. Search Contact by city ");
+			System.out.println("6. Search Contact by state ");
+			System.out.println("7. List by city ");
+			System.out.println("8. List by state ");
+			System.out.println("7. Exit ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -221,6 +240,21 @@ public class AddressBookMain {
 			case 4:
 				displayContactDetails(addressBookMap);
 				break;
+			case 5:
+				System.out.println("Enter city name");
+				String city = sc.nextLine();
+				searchByCity(addressBookMap, city);
+				break;
+			case 6:
+				System.out.printLn("Enter state name");
+				String state = sc.nextLine();
+				searchByState(addressBookMap, state);
+				break;
+			case 7:
+				groupByCity(addressBookMap);
+				break;
+			case 8:
+				groupByState(addressBookMap);
 			default:
 				i = 0;
 			}
