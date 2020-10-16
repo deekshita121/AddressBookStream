@@ -204,9 +204,9 @@ public class AddressBookMain {
 			System.out.println("2. Delete Contact ");
 			System.out.println("3. Search Contact ");
 			System.out.println("4. Display Contact ");
-		//	System.out.println("5. Search Contact by city ");
-		//	System.out.println("6. Search Contact by state ");
-			System.out.println("5. Exit ");
+			System.out.println("5. Search Contact by city ");
+			System.out.println("6. Search Contact by state ");
+			System.out.println("7. Exit ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -220,6 +220,12 @@ public class AddressBookMain {
 				break;
 			case 4:
 				displayContactDetails(addressBookMap);
+				break;
+			case 5:
+				searchByCity(addressBookMap);
+				break;
+			case 6:
+				searchByState(addressBookMap);
 				break;
 			default:
 				i = 0;
