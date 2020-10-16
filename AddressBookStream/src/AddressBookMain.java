@@ -1,6 +1,10 @@
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -10,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
-	private LinkedList<ContactDetails> contactDetailsList;
+	private static LinkedList<ContactDetails> contactDetailsList;
 
 	private AddressBookMain() {
 		contactDetailsList = new LinkedList<>();
@@ -221,6 +225,17 @@ public class AddressBookMain {
 		}
 	}
 
+	public static void sortByFirstName(Map<String, AddressBookMain> addressBookMap) {
+		List<ContactDetails> unsortedList = null;
+		for (Map.Entry<String, AddressBookMain> entry : addressBookMap.entrySet()) {
+			AddressBookMain value = entry.getValue();
+			for (int i = 0; i < value.contactDetailsList.size(); i++) {
+		        unsortedList =  contactDetailsList;
+			}
+		}
+		List<ContactDetails> sortedList = unsortedList.stream().sorted(Comparator.comparing(ContactDetails::getFirstName)).collect(Collectors.toList());
+		System.out.println(sortedList);
+	}
 	
 	public static void main(String[] args) {
 		Map<String, AddressBookMain> addressBookMap = new HashMap<>();
@@ -246,7 +261,8 @@ public class AddressBookMain {
 			System.out.println("6. Search Contact by state ");
 			System.out.println("7. List by city ");
 			System.out.println("8. List by state ");
-			System.out.println("9. Exit ");
+			System.out.println("9. Sort By First Name");
+			System.out.println("10. Exit ");
 			int option = sc.nextInt();
 			switch (option) {
 			case 1:
@@ -276,6 +292,9 @@ public class AddressBookMain {
 				break;
 			case 8:
 				groupByState(addressBookMap);
+				break;
+			case 9:
+				sortByFirstName(addressBookMap);
 				break;
 			default:
 				i = 0;
